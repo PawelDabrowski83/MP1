@@ -1,4 +1,6 @@
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private static int idCounter = 0;
     private int id;
     private String firstName;

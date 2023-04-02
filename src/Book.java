@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-public class Book {
+public class Book implements Serializable {
 
     private static int idCounter = 0;
     private int id;
