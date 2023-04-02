@@ -1,9 +1,7 @@
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * Book as a unique record, not real item.
- */
+
 public class Book {
 
     private static int idCounter = 0;
