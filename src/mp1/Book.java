@@ -1,3 +1,5 @@
+package mp1;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
