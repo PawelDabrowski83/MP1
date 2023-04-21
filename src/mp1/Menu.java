@@ -1,6 +1,7 @@
 package mp1;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -8,11 +9,13 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static mp1.Config.MenuOptions.*;
 import static mp1.Utils.display;
+import static mp1.Config.MenuOptions;
 
 
 public class Menu {
-    Map<Integer, String> options = new HashMap<>();
+    Map<Integer, MenuOptions> options = new HashMap<>();
     int menuCounter = 0;
 
     public Menu() {
@@ -21,52 +24,48 @@ public class Menu {
     }
 
     private void constructMenu() {
-        addPositionToMenu(
-                new String[]
-                        {Config.OPTION_QUIT,
-                        Config.OPTION_GENERATE,
-                        Config.OPTION_LOAD}
-        );
+        addPositionToMenu(QUIT, GENERATE);
     }
 
-    private void addPositionToMenu(String[] message) {
-        for (String s : message) {
-            options.put(menuCounter++, s);
+    private void addPositionToMenu(MenuOptions... menuOptions) {
+        for (MenuOptions option : menuOptions) {
+            addPositionToMenu(option);
         }
+    }
 
+    private void addPositionToMenu(MenuOptions option) {
+        options.put(menuCounter++, option);
     }
 
     public void displayMenuOptions() {
         display("");
         display(Config.MSG_CHOOSE);
-        String message = options.entrySet().stream().map((k) -> String.format("%d -> %s%n", k.getKey(), k.getValue())).collect(Collectors.joining(""));
+        String message = options.entrySet().stream().map((k) -> String.format("%d -> %s%n", k.getKey(), k.getValue().message)).collect(Collectors.joining(""));
         display(message);
     }
 
     public void runMenu() {
-        String option = null;
+        MenuOptions option = null;
         try (Scanner scanner = new Scanner(System.in)) {
 
              displayMenuOptions();
-            while(!Config.OPTION_QUIT.equals(option)) {
+            while(!QUIT.equals(option)) {
 
                 String line = scanner.nextLine();
                 try {
                     option = options.get(Integer.parseInt(line));
                 } catch (NumberFormatException | NullPointerException | IndexOutOfBoundsException e) {
-                    display(Config.ERR_BAD_INPUT);
-                    option = "";
+                    option = INVALID;
+                    display(option.message);
                 }
 
-                if (option == null) {
-                    option = "";
-                }
                 switch (Objects.requireNonNull(option)) {
-                    case Config.OPTION_LOAD -> appLoad();
-                    case Config.OPTION_GENERATE -> appGenerate();
-                    case Config.OPTION_SAVE -> appSave();
-                    case Config.OPTION_CLEAR -> appClear();
-                    case Config.OPTION_SHOW_EXT -> appShowExt();
+                    case LOAD -> appLoad();
+                    case GENERATE -> appGenerate();
+                    case SAVE -> appSave();
+                    case CLEAR -> appClear();
+                    case SHOW -> appShowExt();
+                    case INVALID -> appInvalid();
                 }
                 displayMenuOptions();
             }
@@ -94,11 +93,27 @@ public class Menu {
         Person p2 = new Person("Karolina", "Buzdygan");
         Person p3 = new Person("Teresa", "Cicholas");
         Person p4 = new Person("Andrzej", "Duda");
+        Book b1 = new Book("Anathema",
+                new Person[] { p1},
+                null, null, null);
+        Book b2 = new Book("Biblia w obrazkach",
+                new Person[] { p1, p2},
+                p4, LocalDateTime.of(2023, 1,1, 14, 30), null);
+        Book b3 = new Book("Czy mnie widać? Poradnik",
+                new Person[] {p1},
+                p4, LocalDateTime.of(2019, 4, 4, 12, 29),
+                LocalDateTime.of(2022, 1, 2, 12, 0));
+        Book b4 = new Book("Dać czy nie dać", new Person[]{p1, p2});
+        Book b5 = new Book("E=mc2", new Person[]{p3},
+                p4, LocalDateTime.of(2020, 4, 2, 8, 0), LocalDateTime.now());
+
+
+
+
         display(Config.MSG_GENERATE);
 
-        if (!options.containsValue(Config.OPTION_SHOW_EXT)) {
-            addPositionToMenu(new String[] { Config.OPTION_SHOW_EXT });
-        }
+        addMenuOption(SHOW);
+
 
     }
 
@@ -106,7 +121,19 @@ public class Menu {
         display(Config.MSG_CLEAR);
     }
 
+    private void appInvalid() {
+        display(INVALID.message);
+    }
+
+
     private void appShowExt() throws Exception {
         Person.showExtent(Person.class);
+        Book.showExtent(Book.class);
+    }
+
+    private void addMenuOption(MenuOptions option) {
+        if (!options.containsValue(option)) {
+            addPositionToMenu(option);
+        }
     }
 }

@@ -1,6 +1,22 @@
 package mp1;
 
 public class Config {
+
+    enum MenuOptions {
+        GENERATE(OPTION_GENERATE),
+        LOAD(OPTION_LOAD),
+        SAVE(OPTION_SAVE),
+        CLEAR(OPTION_CLEAR),
+        QUIT(OPTION_QUIT),
+        SHOW(OPTION_SHOW_EXT),
+        INVALID(ERR_BAD_INPUT);
+
+        String message;
+
+        MenuOptions(String message) {
+            this.message = message;
+        }
+    }
     public static final String MSG_WELCOME = "Open program.";
 
     public static final String MENU_PREFIX = "%d - ";

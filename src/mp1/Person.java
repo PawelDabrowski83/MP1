@@ -20,4 +20,8 @@ public class Person extends ObjectPlus {
     public String toString() {
         return String.format("id %d: %s %s", id, firstName, lastName);
     }
+
+    public String toOrdinaryList() {
+        return String.format("%s %s", firstName, lastName);
+    }
 }
