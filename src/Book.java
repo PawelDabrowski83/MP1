@@ -8,7 +8,7 @@ public class Book implements Serializable {
     private static int idCounter = 0;
     private int id;
     private String title;
-    private Person authors[];
+    private Person[] authors;
     private Person borrower;
     private LocalDateTime borrowDate;
     private LocalDateTime returnDate;
