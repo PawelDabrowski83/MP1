@@ -48,18 +48,32 @@ public abstract class ObjectPlus implements Serializable {
                         allExtents.keySet()));
     }
 
-    public static void showExtent(Class theClass) throws Exception {
+    public static <T> void removeExtent(Class<T> type) throws ClassNotFoundException {
+        allExtents.remove(type);
+    }
+
+    public static void removeAllExtents() {
+        allExtents.clear();
+    }
+
+    public static void showExtent(Class theClass) throws ClassCastException {
         List<ObjectPlus> extent = null;
         if(allExtents.containsKey(theClass)) {
 // Extent of this class already exist
             extent = allExtents.get(theClass);
         }
         else {
-            throw new Exception("Unknown class " + theClass);
+            throw new ClassCastException("Unknown class " + theClass);
         }
         System.out.println("Extent of the class: " + theClass.getSimpleName());
         for(Object obj : extent) {
             System.out.println(obj);
+        }
+    }
+
+    public static void showAllExtents() throws ClassCastException {
+        for (Class c : allExtents.keySet()) {
+            showExtent(c);
         }
     }
 

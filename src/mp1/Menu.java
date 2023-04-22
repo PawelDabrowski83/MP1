@@ -37,6 +37,25 @@ public class Menu {
         options.put(menuCounter++, option);
     }
 
+    private void removePositionToMenu(MenuOptions option) {
+        int optionIndex = findOptionIndex(option);
+        if (optionIndex < 0) {
+            return;
+        }
+        options.remove(optionIndex);
+        if (optionIndex + 1 == menuCounter) {
+            menuCounter--;
+        }
+    }
+
+    private int findOptionIndex(MenuOptions option) {
+        return options.entrySet().stream()
+                .filter((k) -> option.equals(k.getValue()))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(-1);
+    }
+
     public void displayMenuOptions() {
         display("");
         display(Config.MSG_CHOOSE);
@@ -113,12 +132,15 @@ public class Menu {
         display(Config.MSG_GENERATE);
 
         addMenuOption(SHOW);
+        addMenuOption(CLEAR);
 
 
     }
 
     private void appClear() {
+        ObjectPlus.removeAllExtents();
         display(Config.MSG_CLEAR);
+        removePositionToMenu(CLEAR);
     }
 
     private void appInvalid() {
@@ -127,8 +149,8 @@ public class Menu {
 
 
     private void appShowExt() throws Exception {
-        Person.showExtent(Person.class);
-        Book.showExtent(Book.class);
+
+        ObjectPlus.showAllExtents();
     }
 
     private void addMenuOption(MenuOptions option) {
