@@ -17,6 +17,7 @@ public class Config {
             this.message = message;
         }
     }
+    public static final String FILENAME = "mp1.obj";
     public static final String MSG_WELCOME = "Open program.";
 
     public static final String MENU_PREFIX = "%d - ";
@@ -38,7 +39,8 @@ public class Config {
     public static final String MSG_CHOOSE = "Enter number to pick option.";
     public static final String ERR_BAD_INPUT = "Incorrect input. Only numbers are allowed here.";
     public static final String ERR_EMPTY = "Database is empty. Consider generating sample data for demonstration.";
-
+    public static final String ERR_SAVE = "Saving error.";
+    public static final String ERR_LOAD = "Loading error.";
     public static final String OPTION_SHOW_EXT = "Show extension.";
 
 

@@ -55,15 +55,12 @@ public class Book extends ObjectPlus {
 
     @Override
     public String toString() {
+        String authorsToString = Stream.of(authors).map(Person::toOrdinaryList).collect(Collectors.joining(", "));
         if (borrower == null) {
-            return String.format("Book{ id %d: \"%s\"" +
-                    Stream.of(authors).map(Person::toOrdinaryList).collect(Collectors.joining(", ")),
-                    id, title);
+            return String.format("Book{ id %d: \"%s\" %s}", id, title, authorsToString);
         }
-        return String.format("Book{ id %d: \"%s\"" +
-                Stream.of(authors).map(Person::toOrdinaryList).collect(Collectors.joining(", ")) +
-                ", borrower=%s, borrowDate=%s, returnDate=%s }",
-                id, title,
+        return String.format("Book{ id %d: \"%s\", %s, borrower=%s, borrowDate=%s, returnDate=%s }",
+                id, title, authorsToString,
                 borrower.toOrdinaryList(),
                 borrowDate == null ? "n/a" : borrowDate.toString(),
                 returnDate == null ? "n/a" : returnDate.toString());
