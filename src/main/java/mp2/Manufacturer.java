@@ -29,8 +29,27 @@ public class Manufacturer {
         productionHistories.remove(productionHistory);
     }
 
-    class Department {
+//    public static Department createDepartment(String name, Manufacturer manufacturer) {
+//        return new Department(name, manufacturer);
+//    }
+
+    public class Department {
+        private static int counter = 0;
         private int id;
         private String name;
+        private Manufacturer manufacturer;
+
+        private Department(String name, Manufacturer manufacturer) {
+            this.id = Department.counter++;
+            this.name = name;
+            this.manufacturer = manufacturer;
+        }
+
+//        public static Department createDepartment(String name, Manufacturer manufacturer) {
+//            return new Department(name, manufacturer);
+//
+//        }
     }
+
+
 }
