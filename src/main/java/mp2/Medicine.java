@@ -9,10 +9,10 @@ public class Medicine {
     private static int counter = 0;
     protected static Map<String, Medicine> allMedicines = new HashMap<>();
 
-    private int id;
+    private final int id;
     private String name;
     protected List<ActiveSubstance> activeSubstances;
-    protected List<Manufacturer> manufacturers = new ArrayList<>();
+    protected List<ProductionHistory> productionHistories;
 
 
     public Medicine(String name, List<ActiveSubstance> activeSubstances) {
@@ -57,6 +57,10 @@ public class Medicine {
         medicine.name = null;
     }
 
+    public void remove(ProductionHistory productionHistory) {
+        productionHistories.remove(productionHistory);
+    }
+
     public static Medicine find(String name) {
         if (name == null || name.isEmpty()) {
             return null;
@@ -75,18 +79,22 @@ public class Medicine {
         Medicine medicine = (Medicine) o;
 
         if (id != medicine.id) return false;
-        if (!name.equals(medicine.name)) return false;
-        if (!activeSubstances.equals(medicine.activeSubstances)) return false;
-        return manufacturers.equals(medicine.manufacturers);
+        if (!Objects.equals(name, medicine.name)) return false;
+        if (!Objects.equals(activeSubstances, medicine.activeSubstances))
+            return false;
+        return Objects.equals(productionHistories, medicine.productionHistories);
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (activeSubstances != null ? activeSubstances.hashCode() : 0);
-        result = 31 * result + (manufacturers != null ? manufacturers.hashCode() : 0);
+        result = 31 * result + (productionHistories != null ? productionHistories.hashCode() : 0);
         return result;
     }
 
+    public void addProductionHistory(ProductionHistory productionHistory) {
+        productionHistories.add(productionHistory);
+    }
 }
