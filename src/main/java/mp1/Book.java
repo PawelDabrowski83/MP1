@@ -1,7 +1,5 @@
 package mp1;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,11 +19,8 @@ public class Book extends ObjectPlus {
     private int id;
     private String title;
     private Person[] authors;
-    @Nullable
     private Person borrower;
-    @Nullable
     private LocalDateTime borrowDate;
-    @Nullable
     private LocalDateTime returnDate;
     public BigDecimal checkPenalty() throws IllegalStateException {
         if (returnDate == null) {
@@ -44,7 +39,7 @@ public class Book extends ObjectPlus {
         this.authors = authors;
     }
 
-    public Book(String title, Person[] authors, @Nullable Person borrower, @Nullable LocalDateTime borrowDate, @Nullable LocalDateTime returnDate) {
+    public Book(String title, Person[] authors, Person borrower, LocalDateTime borrowDate, LocalDateTime returnDate) {
         this.id = idCounter++;
         this.title = title;
         this.authors = authors;

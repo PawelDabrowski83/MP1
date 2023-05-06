@@ -1,13 +1,10 @@
 package mp2;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Medicine {
     private static int counter = 0;
-    private static Set<Medicine> allMedicines = new HashSet<>();
+    protected static Map<String, Medicine> allMedicines = new HashMap<>();
     private int id;
     private String name;
     private final List<ActiveSubstance> activeSubstances;
@@ -19,7 +16,7 @@ public class Medicine {
         this.name = name;
         this.activeSubstances = activeSubstances;
         registerNewActiveSubstances(activeSubstances);
-        allMedicines.add(this);
+        allMedicines.put(name, this);
     }
 
     @Override
@@ -47,6 +44,17 @@ public class Medicine {
         }
         for (ActiveSubstance activeSubstance : activeSubstances) {
             activeSubstance.removeMedicine(this);
+        }
+    }
+
+    public static Medicine find(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
+        }
+        if (allMedicines.containsKey(name)) {
+            allMedicines.get(name);
+        } else {
+            return null;
         }
     }
 }

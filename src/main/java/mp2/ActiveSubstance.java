@@ -1,13 +1,14 @@
 package mp2;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ActiveSubstance {
+    public static final String[] SUBSTANCE_LIST = new String[]{
+            "Anadol", "Barbaryna", "Czekaheksymol", "Drożyna", "Epi", "Faktenol", "Giterol",
+            "Haminamicyna", "Imienal"
+    };
     private static int counter = 0;
-    private static Set<ActiveSubstance> allActiveSubstances = new HashSet<>();
+    protected static Map<String, ActiveSubstance> allActiveSubstances = new HashMap<>();
     private int id;
     private String name;
     private List<Medicine> medicines = new ArrayList<>();
@@ -15,6 +16,7 @@ public class ActiveSubstance {
     public ActiveSubstance(String name) {
         this.id = counter++;
         this.name = name;
+        allActiveSubstances.put(name, this);
     }
 
     @Override
@@ -40,6 +42,31 @@ public class ActiveSubstance {
             allActiveSubstances.remove(this);
         } else {
             throw new IllegalStateException("Cannot remove without removing connected medicines.");
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public static ActiveSubstance find(String name) {
+        if (allActiveSubstances.containsKey(name)) {
+            return allActiveSubstances.get(name);
+        }
+        return null;
+    }
+
+    public static void generateActiveSubstances() {
+        for (String name : SUBSTANCE_LIST) {
+            new ActiveSubstance(name);
         }
     }
 }
