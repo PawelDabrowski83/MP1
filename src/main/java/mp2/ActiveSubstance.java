@@ -39,8 +39,8 @@ public class ActiveSubstance {
     }
 
     public void remove() {
-        if (medicines.isEmpty()) {
-            allActiveSubstances.remove(this);
+        if (medicines.size() == 0) {
+            allActiveSubstances.remove(this.name);
         } else {
             throw new IllegalStateException("Cannot remove without removing connected medicines.");
         }
