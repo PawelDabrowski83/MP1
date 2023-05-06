@@ -4,8 +4,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static mp1.Config.ERR_LOAD;
-import static mp1.Config.ERR_SAVE;
+import static mp1.Config.*;
 import static mp1.Config.MenuOptions.*;
 import static mp1.Utils.display;
 
@@ -102,6 +101,7 @@ public class MenuService {
 
 
     protected void appShowExt() throws Exception {
+        display(MSG_SHOW_EXTENT);
         ObjectPlus.showAllExtents();
     }
 }

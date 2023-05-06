@@ -42,6 +42,7 @@ public class Config {
     public static final String ERR_SAVE = "Saving error.";
     public static final String ERR_LOAD = "Loading error.";
     public static final String OPTION_SHOW_EXT = "Show extension.";
+    public static final String MSG_SHOW_EXTENT = "Show extent:";
 
 
 }
