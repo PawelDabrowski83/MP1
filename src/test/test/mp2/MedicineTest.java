@@ -40,18 +40,21 @@ public class MedicineTest {
         assertEquals(expectedMedicines, Medicine.allMedicines);
     }
 
-    private List<ActiveSubstance> prepareRandomRecipes() {
+    private Map<String, ActiveSubstance> prepareRandomRecipes() {
         int numberOfSubstances = ThreadLocalRandom.current().nextInt(1, 4);
-        List<ActiveSubstance> medicineRecipe = new ArrayList<>();
+        Map<String, ActiveSubstance> medicineRecipe = new HashMap<>();
         while (numberOfSubstances-- > 0) {
-            medicineRecipe.add(ActiveSubstance.getRandomSubstance());
+            medicineRecipe.put(ActiveSubstance.getRandomSubstance().getName(), ActiveSubstance.getRandomSubstance());
         }
         return medicineRecipe;
     }
 
     @Test
     public void simpleTest() {
-        Medicine panadol = new Medicine("Panadol", new ArrayList<>(List.of(new ActiveSubstance[]{ActiveSubstance.getRandomSubstance()})));
+        ActiveSubstance randomSubstance = ActiveSubstance.getRandomSubstance();
+        Map<String, ActiveSubstance> recipe = new HashMap<>();
+        recipe.put(randomSubstance.getName(), randomSubstance);
+        Medicine panadol = new Medicine("Panadol", recipe);
         expectedMedicines.put("Panadol", panadol);
 
         Map<String, Medicine> actualExtent = Medicine.allMedicines;

@@ -11,11 +11,11 @@ public class Medicine {
 
     private final int id;
     private String name;
-    protected List<ActiveSubstance> activeSubstances;
+    protected Map<String, ActiveSubstance> activeSubstances;
     protected List<ProductionHistory> productionHistories;
 
 
-    public Medicine(String name, List<ActiveSubstance> activeSubstances) {
+    public Medicine(String name, Map<String, ActiveSubstance> activeSubstances) {
         this.id = counter++;
         this.name = name;
         this.activeSubstances = activeSubstances;
@@ -34,18 +34,18 @@ public class Medicine {
                 '}';
     }
 
-    private void registerNewActiveSubstances(List<ActiveSubstance> activeSubstances) {
+    private void registerNewActiveSubstances(Map<String, ActiveSubstance> activeSubstances) {
         if (activeSubstances.isEmpty()) {
             return;
         }
-        for (ActiveSubstance activeSubstance : activeSubstances) {
+        for (ActiveSubstance activeSubstance : activeSubstances.values()) {
             activeSubstance.addMedicine(this);
         }
     }
 
     public static void remove(Medicine medicine) {
         allMedicines.remove(medicine.name);
-        List<ActiveSubstance> oldActiveSubstances = medicine.activeSubstances;
+        List<ActiveSubstance> oldActiveSubstances = new ArrayList<>(medicine.activeSubstances.values().stream().toList());
         medicine.activeSubstances = null;
         while (oldActiveSubstances.size() > 0) {
             ActiveSubstance removedSubstance = oldActiveSubstances.remove(0);
